@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class ArrayListTest {
 
-    private ArrayList<String> arrayList = new ArrayList<>();
+    private List<String> list = new LinkedList<>();
 
     private static final String[] STR_ARR = new String[100];
 
@@ -22,31 +22,31 @@ public class ArrayListTest {
             STR_ARR[i] = i + "";
         }
         for (int i = 0; i < 10; i++) {
-            arrayList.add((STR_ARR[i]));
+            list.add((STR_ARR[i]));
         }
     }
 
     @After
     public void after() {
-        arrayList.forEach(System.out::println);
+        list.forEach(System.out::println);
         System.out.println("end");
     }
 
     @Test
     public void isEmpty() {
-        assertFalse(arrayList.isEmpty());
+        assertFalse(list.isEmpty());
     }
 
     @Test
     public void contains() {
         for (int i = 0; i < 10; i++) {
-            assertTrue(arrayList.contains(STR_ARR[i]));
+            assertTrue(list.contains(STR_ARR[i]));
         }
     }
 
     @Test
     public void iterator() {
-        Iterator<String> iterator = arrayList.iterator();
+        Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
@@ -54,7 +54,7 @@ public class ArrayListTest {
 
     @Test
     public void toArray() {
-        Object[] objects = arrayList.toArray();
+        Object[] objects = list.toArray();
         for (int i = 0; i < objects.length; i++) {
             assertEquals(STR_ARR[i], objects[i]);
         }
@@ -63,23 +63,23 @@ public class ArrayListTest {
     @Test
     public void toArray1() {
         String[] integers1 = new String[10];
-        String[] integers2 = arrayList.toArray(integers1);
+        String[] integers2 = list.toArray(integers1);
         assertArrayEquals(integers1, integers2);
         integers1 = new String[3];
-        integers2 = arrayList.toArray(integers1);
+        integers2 = list.toArray(integers1);
         assertArrayEquals(integers1, integers2);
     }
 
     @Test
     public void add() {
-        arrayList.add(STR_ARR[11]);
-        assertEquals(arrayList.get(arrayList.size() - 1) , STR_ARR[11]);
+        list.add(STR_ARR[11]);
+        assertEquals(list.get(list.size() - 1) , STR_ARR[11]);
     }
 
     @Test
     public void remove() {
-        arrayList.remove(STR_ARR[3]);
-        assertFalse(arrayList.contains(STR_ARR[3]));
+        list.remove(STR_ARR[3]);
+        assertFalse(list.contains(STR_ARR[3]));
     }
 
     @Test
@@ -88,9 +88,9 @@ public class ArrayListTest {
         for (int i = 0; i < 9; i++) {
             temp.add(STR_ARR[i]);
         }
-        assertTrue(arrayList.containsAll(temp));
+        assertTrue(list.containsAll(temp));
         temp.add(STR_ARR[20]);
-        assertFalse(arrayList.containsAll(temp));
+        assertFalse(list.containsAll(temp));
     }
 
     @Test
@@ -99,8 +99,8 @@ public class ArrayListTest {
         for (int i = 10; i < 20; i++) {
             temp.add(STR_ARR[i]);
         }
-        arrayList.addAll(temp);
-        assertTrue(arrayList.containsAll(temp));
+        list.addAll(temp);
+        assertTrue(list.containsAll(temp));
     }
 
     @Test
@@ -109,8 +109,8 @@ public class ArrayListTest {
         for (int i = 10; i < 20; i++) {
             temp.add((STR_ARR[i]));
         }
-        arrayList.addAll(2, temp);
-        assertFalse(arrayList.containsAll(temp));
+        list.addAll(2, temp);
+        assertFalse(list.containsAll(temp));
     }
 
     @Test
@@ -118,16 +118,16 @@ public class ArrayListTest {
         int i;
         List<String> temp = new ArrayList<>(10);
         for (i = 0; i < 5; i++) {
-            arrayList.remove(STR_ARR[i]);
             temp.add(STR_ARR[i]);
         }
-        assertFalse(arrayList.containsAll(temp));
+        list.removeAll(temp);
+        assertFalse(list.containsAll(temp));
         for (; i < 10; i++) {
-            arrayList.remove(STR_ARR[i]);
             temp.add(STR_ARR[i]);
         }
-        assertFalse(arrayList.containsAll(temp));
-        assertTrue(arrayList.isEmpty());
+        list.removeAll(temp);
+        assertFalse(list.containsAll(temp));
+        assertTrue(list.isEmpty());
     }
 
     @Test
@@ -136,14 +136,14 @@ public class ArrayListTest {
         for (int i = 0; i < 5; i++) {
             temp.add(STR_ARR[i]);
         }
-        arrayList.retainAll(temp);
-        assertArrayEquals(temp.toArray(), arrayList.toArray());
+        list.retainAll(temp);
+        assertArrayEquals(temp.toArray(), list.toArray());
     }
 
     @Test
     public void clear() {
-        arrayList.clear();
-        assertFalse(arrayList.isEmpty());
+        list.clear();
+        assertTrue(list.isEmpty());
     }
 
     @Test
@@ -155,36 +155,36 @@ public class ArrayListTest {
 
     @Test
     public void set() {
-        arrayList.set(3,STR_ARR[99]);
-        assertTrue(arrayList.get(3).equals(STR_ARR[99]));
+        list.set(3,STR_ARR[99]);
+        assertTrue(list.get(3).equals(STR_ARR[99]));
     }
 
     @Test
     public void add1() {
-        arrayList.add(3,STR_ARR[99]);
-        assertEquals(arrayList.get(3), STR_ARR[99]);
+        list.add(3,STR_ARR[99]);
+        assertEquals(list.get(3), STR_ARR[99]);
     }
 
     @Test
     public void remove1() {
-        arrayList.remove(STR_ARR[4]);
-        assertFalse(arrayList.contains(STR_ARR[4]));
+        list.remove(STR_ARR[4]);
+        assertFalse(list.contains(STR_ARR[4]));
     }
 
     @Test
     public void indexOf() {
         for (int i = 0; i < 10; i++) {
-            assertEquals(arrayList.indexOf(STR_ARR[i]) , i);
+            assertEquals(list.indexOf(STR_ARR[i]) , i);
         }
     }
 
     @Test
     public void lastIndexOf() {
         for (int i = 0; i < 10; i++) {
-            arrayList.add(STR_ARR[i]);
+            list.add(STR_ARR[i]);
         }
         for (int i = 0; i < 10; i++) {
-            assertTrue(arrayList.lastIndexOf(STR_ARR[i]) == i + 10);
+            assertEquals(list.lastIndexOf(STR_ARR[i]) , i + 10);
         }
     }
 }
