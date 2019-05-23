@@ -1,4 +1,4 @@
-package com.wkx.study;
+package com.wkx.study.list;
 
 import org.junit.After;
 import org.junit.Before;
